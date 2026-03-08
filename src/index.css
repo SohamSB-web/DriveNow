@@ -31,6 +31,10 @@ body {
   overflow-x: hidden;
 }
 
+section[id] {
+  scroll-margin-top: 96px; /* Offset for h-24 navbar */
+}
+
 h1,
 h2,
 h3,
