@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NextSection from '../components/NextSection';
 import Footer from '../components/Footer';
+import { useLenis } from 'lenis/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,13 +31,18 @@ export default function LandingPage() {
   const overlay2Ref = useRef(null);
   const [loaded, setLoaded] = useState(0);
   const [activeSection, setActiveSection] = useState('hero');
+  const lenis = useLenis();
 
   /* ── Smooth Scroll Helper ── */
   const smoothScrollTo = (e, id) => {
     e.preventDefault();
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (lenis) {
+      lenis.scrollTo(`#${id}`);
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 

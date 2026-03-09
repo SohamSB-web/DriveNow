@@ -1,5 +1,24 @@
+import { useEffect, useRef } from 'react';
 import LandingPage from './screens/LandingPage';
+import { ReactLenis } from 'lenis/react';
+import gsap from 'gsap';
 
 export default function App() {
-  return <LandingPage />;
+  const lenisRef = useRef();
+
+  useEffect(() => {
+    function update(time) {
+      lenisRef.current?.lenis?.raf(time * 1000);
+    }
+
+    gsap.ticker.add(update);
+
+    return () => gsap.ticker.remove(update);
+  });
+
+  return (
+    <ReactLenis root ref={lenisRef} autoRaf={false}>
+      <LandingPage />
+    </ReactLenis>
+  );
 }
