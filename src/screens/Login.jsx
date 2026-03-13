@@ -33,7 +33,10 @@ export default function Login() {
             Get behind the wheel. DriveNow is optimizing the future of high-performance car rentals.
           </p>
 
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={(e) => {
+            e.preventDefault();
+            window.location.href = '/dashboard';
+          }}>
 
             {/* Email Input */}
             <div className="relative">

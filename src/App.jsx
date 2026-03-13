@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import LandingPage from './screens/LandingPage';
 import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
 import { ReactLenis } from 'lenis/react';
 import gsap from 'gsap';
 
@@ -21,7 +22,13 @@ export default function App() {
 
   return (
     <ReactLenis root ref={lenisRef} autoRaf={false}>
-      {path === '/login' ? <Login /> : <LandingPage />}
+      {path === '/login' ? (
+        <Login />
+      ) : path === '/dashboard' ? (
+        <Dashboard />
+      ) : (
+        <LandingPage />
+      )}
     </ReactLenis>
   );
 }
