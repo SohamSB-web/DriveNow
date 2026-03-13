@@ -15,7 +15,7 @@ export default function Footer() {
         </h2>
 
         {/* Glowing Pill Button */}
-        <button className="relative group z-10">
+        <a href="/login" className="relative group z-10">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-40 group-hover:opacity-100 transition duration-500 group-hover:duration-200"></div>
           <div className="relative px-10 py-5 bg-black rounded-full border border-white/10 flex items-center gap-3 hover:bg-[#0A0A0A] transition-colors">
             <span className="text-sm font-bold tracking-wider uppercase">Get Early Access</span>
@@ -23,7 +23,7 @@ export default function Footer() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </div>
-        </button>
+        </a>
       </div>
 
       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>

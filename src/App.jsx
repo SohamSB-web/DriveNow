@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import LandingPage from './screens/LandingPage';
+import Login from './screens/Login';
 import { ReactLenis } from 'lenis/react';
 import gsap from 'gsap';
 
@@ -16,9 +17,11 @@ export default function App() {
     return () => gsap.ticker.remove(update);
   });
 
+  const path = window.location.pathname;
+
   return (
     <ReactLenis root ref={lenisRef} autoRaf={false}>
-      <LandingPage />
+      {path === '/login' ? <Login /> : <LandingPage />}
     </ReactLenis>
   );
 }
