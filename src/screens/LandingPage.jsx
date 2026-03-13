@@ -201,8 +201,11 @@ export default function LandingPage() {
             })}
           </ul>
 
-          <button onClick={(e) => smoothScrollTo(e, 'vehicles')} className="nav-cta text-white px-7 py-3 rounded-full text-sm font-bold tracking-wide uppercase cursor-pointer">
-            Rent Now
+          <button 
+              onClick={() => window.location.href = '/login'} 
+              className="nav-cta text-white px-7 py-3 rounded-full text-sm font-bold tracking-wide uppercase cursor-pointer"
+          >
+              Rent Now
           </button>
         </div>
       </motion.nav>

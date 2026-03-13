@@ -21,14 +21,16 @@ export default function App() {
   const path = window.location.pathname;
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false}>
+    <>
       {path === '/login' ? (
         <Login />
       ) : path === '/dashboard' ? (
         <Dashboard />
       ) : (
-        <LandingPage />
+        <ReactLenis root ref={lenisRef} autoRaf={false}>
+          <LandingPage />
+        </ReactLenis>
       )}
-    </ReactLenis>
+    </>
   );
 }

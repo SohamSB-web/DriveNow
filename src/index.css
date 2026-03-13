@@ -44,20 +44,22 @@ h6 {
 
 /* ── Custom Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-dark-900);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-dark-600);
-  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-dark-500);
+  background: var(--color-accent-blue);
 }
 
 /* ── Gradient Badge ── */
