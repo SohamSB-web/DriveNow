@@ -228,7 +228,7 @@ export default function VehicleCatalog() {
                                             alt={car.name}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-60" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-30" />
                                         <div className="absolute bottom-6 left-8 right-8 flex justify-between items-end">
                                             <div>
                                                 <span className="text-blue-400 text-[10px] font-bold tracking-[0.2em] uppercase">{car.category}</span>

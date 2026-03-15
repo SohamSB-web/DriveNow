@@ -322,7 +322,7 @@ export default function LandingPage() {
               <div key={i} className="group relative bg-white/5 border border-white/10 rounded-[32px] overflow-hidden hover:border-blue-500/30 transition-all duration-500">
                 <div className="h-64 overflow-hidden relative">
                   <img src={vehicle.image} alt={vehicle.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent opacity-30" />
                 </div>
                 <div className="p-8">
                   <h3 className="text-2xl font-bold mb-3">{vehicle.name}</h3>
