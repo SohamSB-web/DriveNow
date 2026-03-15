@@ -71,51 +71,67 @@ export default function Dashboard() {
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.3 }}
                     >
-                        {showCatalog ? (
-                            <VehicleCatalog onBack={() => setShowCatalog(false)} />
-                        ) : (
-                            <>
-                                {/* Stats Row */}
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-                                    {STATS.map((stat, i) => (
-                                        <StatCard key={i} {...stat} />
-                                    ))}
-                                </div>
+                        <AnimatePresence mode="wait">
+                            {showCatalog ? (
+                                <motion.div
+                                    key="catalog"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    transition={{ duration: 0.4, ease: "circOut" }}
+                                >
+                                    <VehicleCatalog onBack={() => setShowCatalog(false)} />
+                                </motion.div>
+                            ) : (
+                                <motion.div
+                                    key="overview-content"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: 20 }}
+                                    transition={{ duration: 0.4, ease: "circOut" }}
+                                >
+                                    {/* Stats Row */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+                                        {STATS.map((stat, i) => (
+                                            <StatCard key={i} {...stat} />
+                                        ))}
+                                    </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                    <BookingCard 
-                                        variant="active" 
-                                        booking={ACTIVE_BOOKING} 
-                                        setActiveTab={setActiveTab} 
-                                        onViewDetails={(b) => setSelectedBooking(b)}
-                                    />
+                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                        <BookingCard 
+                                            variant="active" 
+                                            booking={ACTIVE_BOOKING} 
+                                            setActiveTab={setActiveTab} 
+                                            onViewDetails={(b) => setSelectedBooking(b)}
+                                        />
 
-                                    {/* ── Recent History List ── */}
-                                    <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col">
-                                        <div className="flex justify-between items-center mb-6">
-                                            <h3 className="text-lg font-bold tracking-tight">Recent History</h3>
-                                            <button 
-                                                onClick={() => setActiveTab('My Bookings')}
-                                                className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
-                                            >
-                                                View All
-                                            </button>
-                                        </div>
+                                        {/* ── Recent History List ── */}
+                                        <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col">
+                                            <div className="flex justify-between items-center mb-6">
+                                                <h3 className="text-lg font-bold tracking-tight">Recent History</h3>
+                                                <button 
+                                                    onClick={() => setActiveTab('My Bookings')}
+                                                    className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
+                                                >
+                                                    View All
+                                                </button>
+                                            </div>
 
-                                        <div className="flex flex-col gap-4 flex-1">
-                                            {BOOKING_HISTORY.map((booking) => (
-                                                <BookingCard 
-                                                    key={booking.id} 
-                                                    variant="list" 
-                                                    booking={booking} 
-                                                    onViewDetails={(b) => setSelectedBooking(b)}
-                                                />
-                                            ))}
+                                            <div className="flex flex-col gap-4 flex-1">
+                                                {BOOKING_HISTORY.map((booking) => (
+                                                    <BookingCard 
+                                                        key={booking.id} 
+                                                        variant="list" 
+                                                        booking={booking} 
+                                                        onViewDetails={(b) => setSelectedBooking(b)}
+                                                    />
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </>
-                        )}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </motion.div>
                 );
             case 'My Bookings':
@@ -307,12 +323,16 @@ export default function Dashboard() {
                     >
                         <div>
                             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-                                {activeTab === 'Overview' ? `Welcome back, ${user.FirstName}.` : activeTab}
+                                {showCatalog 
+                                    ? "Book Your Next Ride." 
+                                    : activeTab === 'Overview' ? `Welcome back, ${user.FirstName}.` : activeTab}
                             </h1>
                             <p className="text-gray-400 mt-2 text-sm font-medium">
-                                {activeTab === 'Overview' 
-                                    ? "Here is what's happening with your vehicles today." 
-                                    : `Manage your ${activeTab.toLowerCase()} and preferences.`}
+                                {showCatalog
+                                    ? "Explore our premium fleet and select your perfect companion."
+                                    : activeTab === 'Overview' 
+                                        ? "Here is what's happening with your vehicles today." 
+                                        : `Manage your ${activeTab.toLowerCase()} and preferences.`}
                             </p>
                         </div>
                         {activeTab === 'Overview' && (
