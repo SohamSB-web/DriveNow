@@ -10,6 +10,7 @@ import NotificationsPanel from '../components/dashboard/NotificationsPanel';
 import DigitalKey from '../components/dashboard/DigitalKey';
 import LiveMap from '../components/dashboard/LiveMap';
 import BookingDetailsModal from '../components/dashboard/BookingDetailsModal';
+import RentVehicleModal from '../components/dashboard/RentVehicleModal';
 import { ReactLenis } from 'lenis/react';
 
 // --- Mock Data based on your ER Diagram ---
@@ -53,6 +54,7 @@ export default function Dashboard() {
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showCatalog, setShowCatalog] = useState(false);
     const [selectedBooking, setSelectedBooking] = useState(null);
+    const [selectedVehicle, setSelectedVehicle] = useState(null);
 
     const handleLogout = () => {
         window.location.href = '/login';
@@ -80,7 +82,10 @@ export default function Dashboard() {
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ duration: 0.4, ease: "circOut" }}
                                 >
-                                    <VehicleCatalog onBack={() => setShowCatalog(false)} />
+                                    <VehicleCatalog 
+                                        onBack={() => setShowCatalog(false)} 
+                                        onRentVehicle={(car) => setSelectedVehicle(car)}
+                                    />
                                 </motion.div>
                             ) : (
                                 <motion.div
@@ -358,6 +363,12 @@ export default function Dashboard() {
                     <BookingDetailsModal
                         booking={selectedBooking}
                         onClose={() => setSelectedBooking(null)}
+                    />
+                )}
+                {selectedVehicle && (
+                    <RentVehicleModal
+                        car={selectedVehicle}
+                        onClose={() => setSelectedVehicle(null)}
                     />
                 )}
             </AnimatePresence>

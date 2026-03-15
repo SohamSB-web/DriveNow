@@ -127,7 +127,7 @@ const VEHICLES = [
     }
 ];
 
-export default function VehicleCatalog() {
+export default function VehicleCatalog({ onBack, onRentVehicle }) {
     const [activeFilter, setActiveFilter] = useState('All');
     const [isChanging, setIsChanging] = useState(false);
 
@@ -257,7 +257,10 @@ export default function VehicleCatalog() {
                                             </div>
                                         </div>
 
-                                        <button className="w-full bg-white text-black py-4 rounded-[20px] text-xs font-black tracking-[0.2em] uppercase hover:bg-blue-600 hover:text-white transition-all duration-500 shadow-xl shadow-white/5">
+                                        <button 
+                                            onClick={() => onRentVehicle(car)}
+                                            className="w-full bg-white text-black py-4 rounded-[20px] text-xs font-black tracking-[0.2em] uppercase hover:bg-blue-600 hover:text-white transition-all duration-500 shadow-xl shadow-white/5"
+                                        >
                                             Rent this Vehicle
                                         </button>
                                     </div>
