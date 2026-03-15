@@ -46,7 +46,7 @@ export default function Footer() {
           <div className="flex flex-col items-start">
             <h4 className="text-white font-bold tracking-wider text-sm uppercase mb-6">Product</h4>
             <ul className="flex flex-col gap-4">
-              {['Features', 'Pricing', 'Fleet', 'How it Works'].map((link) => (
+              {['Features', 'Experience', 'Fleet', 'How it Works'].map((link) => (
                 <li key={link}>
                   <a href={`#${link.toLowerCase().replace(/\s+/g, '-')}`} className="text-gray-400 hover:text-white transition-colors text-sm">
                     {link}

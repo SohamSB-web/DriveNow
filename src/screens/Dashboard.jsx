@@ -9,6 +9,8 @@ import ProfileEditor from '../components/dashboard/ProfileEditor';
 import NotificationsPanel from '../components/dashboard/NotificationsPanel';
 import DigitalKey from '../components/dashboard/DigitalKey';
 import LiveMap from '../components/dashboard/LiveMap';
+import BookingDetailsModal from '../components/dashboard/BookingDetailsModal';
+import { ReactLenis } from 'lenis/react';
 
 // --- Mock Data based on your ER Diagram ---
 const USER = {
@@ -20,7 +22,7 @@ const USER = {
 const STATS = [
     { label: 'Active Rentals', value: '1' },
     { label: 'Total Miles Driven', value: '1,240' },
-    { label: 'Reward Points', value: '8,450' },
+    { label: 'Payment Status', value: 'Settled' },
 ];
 
 const ACTIVE_BOOKING = {
@@ -50,6 +52,7 @@ export default function Dashboard() {
     const [activeTab, setActiveTab] = useState('Overview');
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showCatalog, setShowCatalog] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState(null);
 
     const handleLogout = () => {
         window.location.href = '/login';
@@ -80,18 +83,33 @@ export default function Dashboard() {
                                 </div>
 
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                    <BookingCard variant="active" booking={ACTIVE_BOOKING} />
+                                    <BookingCard 
+                                        variant="active" 
+                                        booking={ACTIVE_BOOKING} 
+                                        setActiveTab={setActiveTab} 
+                                        onViewDetails={(b) => setSelectedBooking(b)}
+                                    />
 
                                     {/* ── Recent History List ── */}
                                     <div className="bg-white/5 border border-white/10 rounded-[32px] p-8 flex flex-col">
                                         <div className="flex justify-between items-center mb-6">
                                             <h3 className="text-lg font-bold tracking-tight">Recent History</h3>
-                                            <button className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors">View All</button>
+                                            <button 
+                                                onClick={() => setActiveTab('My Bookings')}
+                                                className="text-blue-400 text-sm font-medium hover:text-blue-300 transition-colors"
+                                            >
+                                                View All
+                                            </button>
                                         </div>
 
                                         <div className="flex flex-col gap-4 flex-1">
                                             {BOOKING_HISTORY.map((booking) => (
-                                                <BookingCard key={booking.id} variant="list" booking={booking} />
+                                                <BookingCard 
+                                                    key={booking.id} 
+                                                    variant="list" 
+                                                    booking={booking} 
+                                                    onViewDetails={(b) => setSelectedBooking(b)}
+                                                />
                                             ))}
                                         </div>
                                     </div>
@@ -113,7 +131,12 @@ export default function Dashboard() {
                         <h2 className="text-2xl font-bold mb-4">Your Booking History</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {[ACTIVE_BOOKING, ...BOOKING_HISTORY].map((booking, idx) => (
-                                <BookingCard key={idx} booking={booking} />
+                                <BookingCard 
+                                    key={idx} 
+                                    booking={booking} 
+                                    setActiveTab={setActiveTab} 
+                                    onViewDetails={(b) => setSelectedBooking(b)}
+                                />
                             ))}
                         </div>
                     </motion.div>
@@ -258,9 +281,15 @@ export default function Dashboard() {
             />
 
             {/* ─────────── MAIN CONTENT ─────────── */}
-            <main 
-                data-lenis-prevent
+            <ReactLenis 
                 className="flex-1 relative overflow-y-auto bg-gradient-to-b from-[#0A0A0A] to-[#050505] p-2"
+                wrapperProps={{
+                    style: {
+                        flex: 1,
+                        position: 'relative',
+                        overflowY: 'auto'
+                    }
+                }}
             >
 
                 {/* Ambient Glow */}
@@ -302,7 +331,16 @@ export default function Dashboard() {
                     </AnimatePresence>
 
                 </div>
-            </main>
+            </ReactLenis>
+
+            <AnimatePresence>
+                {selectedBooking && (
+                    <BookingDetailsModal
+                        booking={selectedBooking}
+                        onClose={() => setSelectedBooking(null)}
+                    />
+                )}
+            </AnimatePresence>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export function BookingCard({ booking, variant = 'grid' }) {
+export function BookingCard({ booking, variant = 'grid', setActiveTab, onViewDetails }) {
     if (variant === 'active') {
         return (
             <div className="lg:col-span-2 bg-gradient-to-br from-white/10 to-white/5 border border-white/10 rounded-[32px] p-1 overflow-hidden relative">
@@ -36,10 +36,16 @@ export function BookingCard({ booking, variant = 'grid' }) {
                     </div>
 
                     <div className="mt-8 flex gap-4 relative z-10">
-                        <button className="flex-1 bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-2xl text-sm font-bold transition-colors">
+                        <button 
+                            onClick={() => setActiveTab('My Bookings')}
+                            className="flex-1 bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-2xl text-sm font-bold transition-colors"
+                        >
                             Manage Booking
                         </button>
-                        <button className="flex-1 bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-2xl text-sm font-bold transition-colors">
+                        <button 
+                            onClick={() => setActiveTab('Active Rental')}
+                            className="flex-1 bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-2xl text-sm font-bold transition-colors"
+                        >
                             View Digital Key
                         </button>
                     </div>
@@ -50,7 +56,10 @@ export function BookingCard({ booking, variant = 'grid' }) {
 
     if (variant === 'list') {
          return (
-            <div className="group p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all cursor-pointer">
+            <div 
+                onClick={() => onViewDetails?.(booking)}
+                className="group p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all cursor-pointer"
+            >
                 <div className="flex justify-between items-center mb-1">
                     <span className="font-semibold text-sm group-hover:text-blue-400 transition-colors">{booking.Vehicle || booking.vehicle}</span>
                     <span className="font-bold text-sm">{booking.TotalAmount || booking.amount}</span>
@@ -74,7 +83,12 @@ export function BookingCard({ booking, variant = 'grid' }) {
             <p className="text-gray-400 text-sm mb-4">ID: {booking.BookingID || booking.id}</p>
             <div className="flex justify-between items-center">
                 <span className="text-lg font-bold">{booking.TotalAmount || booking.amount}</span>
-                <button className="text-blue-400 text-sm font-medium hover:underline">View Details</button>
+                <button 
+                    onClick={() => onViewDetails?.(booking)}
+                    className="text-blue-400 text-sm font-medium hover:underline"
+                >
+                    View Details
+                </button>
             </div>
         </div>
     );
